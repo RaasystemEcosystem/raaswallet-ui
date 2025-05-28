@@ -1,0 +1,1 @@
+// Placeholder for src/components/WalletConnector.js
