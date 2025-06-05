@@ -1,1 +1,0 @@
-// Format helpers (e.g. address shortening)
