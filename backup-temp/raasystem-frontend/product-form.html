@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Product</title>
+</head>
+<body>
+  <h1>Add a New Product</h1>
+  <form id="productForm">
+    <label>
+      Name:
+      <input type="text" id="name" required />
+    </label>
+    <br><br>
+    <label>
+      Price:
+      <input type="number" id="price" step="0.01" required />
+    </label>
+    <br><br>
+    <label>
+      Description:
+      <textarea id="description" required></textarea>
+    </label>
+    <br><br>
+    <button type="submit">Add Product</button>
+  </form>
+
+  <p id="response"></p>
+
+  <script>
+    const form = document.getElementById('productForm');
+    const responseEl = document.getElementById('response');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const product = {
+        name: document.getElementById('name').value,
+        price: parseFloat(document.getElementById('price').value),
+        description: document.getElementById('description').value
+      };
+
+      try {
+        const res = await fetch('http://localhost:5000/api/products', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(product)
+        });
+
+        const data = await res.json();
+        responseEl.textContent = '✅ Product added: ' + JSON.stringify(data);
+      } catch (err) {
+        responseEl.textContent = '❌ Error: ' + err.message;
+      }
+    });
+  </script>
+</body>
+</html>
